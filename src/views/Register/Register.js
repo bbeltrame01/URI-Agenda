@@ -28,7 +28,6 @@ export default function LoginPage(props) {
     setCardAnimation("");
   }, 700);
   const classes = useStyles();
-  const { ...rest } = props;
   return (
     <div>
       <div
@@ -99,6 +98,7 @@ export default function LoginPage(props) {
                   </CardBody>
                   <CardFooter>
                     <Button block color="primary" size="lg">Cadastrar</Button>
+                    <Button block simple color="primary" size="lg" href={"/login"}>Login</Button>
                   </CardFooter>
                 </form>
               </Card>

@@ -27,7 +27,6 @@ export default function LoginPage(props) {
     setCardAnimation("");
   }, 700);
   const classes = useStyles();
-  const { ...rest } = props;
   return (
     <div>
       <div
@@ -79,13 +78,11 @@ export default function LoginPage(props) {
                         ),
                         autoComplete: "off"
                       }}
-                    />
-                    <Button block color="primary" size="lg">Entrar</Button>
+                    />                    
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
-                      Cadastre-se
-                    </Button>
+                    <Button block color="primary" size="lg">Entrar</Button>
+                    <Button block simple color="primary" size="lg" href={"/register"}>Cadastre-se</Button>
                   </CardFooter>
                 </form>
               </Card>
