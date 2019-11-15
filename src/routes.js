@@ -4,9 +4,10 @@ import Person from "@material-ui/icons/Person";
 import Workspace from "@material-ui/icons/ViewCarousel";
 import Close from "@material-ui/icons/Close";
 // core components/views for Admin layout
-import Scheduler from "views/Main/index.js";
+import Scheduler from "views/Scheduler/Scheduler.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import LoginPage from "views/Login/Login.js";
+import Register from "views/Register/Register.js";
 import WorkspacePage from "views/Workspace/Workspace.js";
 
 const dashboardRoutes = [
@@ -36,6 +37,13 @@ const dashboardRoutes = [
     name: "Sair",
     icon: Close,
     component: LoginPage,
+    layout: "/admin"
+  },
+  {
+    path: "/register",
+    name: "Cadastre-se",
+    icon: Close,
+    component: Register,
     layout: "/admin"
   }
 ];

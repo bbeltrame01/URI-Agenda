@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
+import GridContainer from "components/Grid/GridContainer.js";
 
 import { cardTitle } from "assets/jss/material-dashboard-react.js";
 
@@ -22,20 +23,18 @@ export default function CardsImages() {
   const classes = useStyles();
   return (
     <div>
-      <Card className={classes.textCenter} style={{ width: "20rem" }}>
-        <CardBody>
-          <h4 className={classes.cardTitle}>Agenda - Trabalho</h4>
-          <p>
-            Descrição definida pelo usuário, ou tiramo.
-          </p>
-          <Button color="primary">Entrar</Button>
-        </CardBody>
-      </Card>
-      <Card className={classes.textCenter} style={{ width: "20rem" }}>
-        <CardBody>
-          <Button color="transparent">+</Button>
-        </CardBody>
-      </Card>
+      <GridContainer justify="center">
+        <Card className={classes.textCenter} style={{ width: "20rem" }}>
+          <CardBody>
+            <h4 className={classes.cardTitle}>Agenda - Trabalho</h4>
+            <p>
+              Descrição definida pelo usuário, ou tiramo.
+            </p>
+            <Button color="primary">Entrar</Button>
+            <Button color="primary">+</Button>
+          </CardBody>
+        </Card>
+      </GridContainer>
     </div>
   );
 }

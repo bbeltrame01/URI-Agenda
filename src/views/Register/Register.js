@@ -5,6 +5,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
+import People from "@material-ui/icons/People";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -44,9 +45,24 @@ export default function LoginPage(props) {
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Login</h4>
+                    <h4>Cadastre-se</h4>
                   </CardHeader>
                   <CardBody>
+                    <CustomInput
+                      labelText="Nome Completo..."
+                      id="first"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <People className={classes.inputIconsColor} />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
                     <CustomInput
                       labelText="Email..."
                       id="email"
@@ -79,13 +95,10 @@ export default function LoginPage(props) {
                         ),
                         autoComplete: "off"
                       }}
-                    />
-                    <Button block color="primary" size="lg">Entrar</Button>
+                    />                   
                   </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
-                      Cadastre-se
-                    </Button>
+                  <CardFooter>
+                    <Button block color="primary" size="lg">Cadastrar</Button>
                   </CardFooter>
                 </form>
               </Card>
