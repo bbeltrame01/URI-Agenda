@@ -1,13 +1,11 @@
 // @material-ui/icons
 import Calendar from "@material-ui/icons/Event";
 import Person from "@material-ui/icons/Person";
-import Workspace from "@material-ui/icons/ViewCarousel";
 import Close from "@material-ui/icons/Close";
 // core components/views for Admin layout
 import Scheduler from "views/Scheduler/Scheduler.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import LoginPage from "views/Login/Login.js";
-import WorkspacePage from "views/Workspace/Workspace.js";
 
 const dashboardRoutes = [
   {
@@ -22,13 +20,6 @@ const dashboardRoutes = [
     name: "Perfil de usuário",
     icon: Person,
     component: UserProfile,
-    layout: "/admin"
-  },
-  {
-    path: "/workspace",
-    name: "Workspace",
-    icon: Workspace,
-    component: WorkspacePage,
     layout: "/admin"
   },
   {

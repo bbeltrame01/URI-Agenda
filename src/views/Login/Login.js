@@ -12,7 +12,6 @@ import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardFooter from "components/Card/CardFooter.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-dashboard-react/views/loginPage.js";
@@ -39,7 +38,7 @@ export default function LoginPage(props) {
       >
         <div className={classes.container}>
           <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={3}>
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
@@ -47,7 +46,7 @@ export default function LoginPage(props) {
                   </CardHeader>
                   <CardBody>
                     <CustomInput
-                      labelText="Email..."
+                      labelText="Email"
                       id="email"
                       formControlProps={{
                         fullWidth: true
@@ -62,7 +61,7 @@ export default function LoginPage(props) {
                       }}
                     />
                     <CustomInput
-                      labelText="Senha..."
+                      labelText="Senha"
                       id="pass"
                       formControlProps={{
                         fullWidth: true
@@ -78,12 +77,10 @@ export default function LoginPage(props) {
                         ),
                         autoComplete: "off"
                       }}
-                    />                    
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
+                    />                  
                     <Button block color="primary" size="lg">Entrar</Button>
                     <Button block simple color="primary" size="lg" href={"/register"}>Cadastre-se</Button>
-                  </CardFooter>
+                  </CardBody>
                 </form>
               </Card>
             </GridItem>
