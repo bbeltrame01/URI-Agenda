@@ -1,3 +1,4 @@
+// https://github.com/StephenChou1017/react-big-scheduler
 import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";

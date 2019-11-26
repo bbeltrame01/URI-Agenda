@@ -21,10 +21,15 @@ import image from "assets/img/bg.jpg";
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
-  const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
-  setTimeout(function() {
-    setCardAnimation("");
-  }, 700);
+  const LoginData = ``;
+  const searchUser = () => {
+    fetch(LoginData)
+    .then(response => response.json())
+    .then(response => {
+      
+    })
+  };
+
   const classes = useStyles();
   return (
     <div>
@@ -39,7 +44,7 @@ export default function LoginPage(props) {
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={3}>
-              <Card className={classes[cardAnimaton]}>
+              <Card>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Login</h4>
@@ -78,7 +83,7 @@ export default function LoginPage(props) {
                         autoComplete: "off"
                       }}
                     />                  
-                    <Button block color="primary" size="lg">Entrar</Button>
+                    <Button block color="primary" size="lg" onClick={() => searchUser()}>Entrar</Button>
                     <Button block simple color="primary" size="lg" href={"/register"}>Cadastre-se</Button>
                   </CardBody>
                 </form>

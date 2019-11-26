@@ -1,5 +1,5 @@
 import React from 'react';
-import './events/index';
+import './Events/NewEvent';
 import EventCalendar from '../EventCalendar';
 
 function Main() {
