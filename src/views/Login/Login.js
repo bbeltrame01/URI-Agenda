@@ -72,7 +72,8 @@ export default function LoginPage() {
                         labelText="Email"
                         id="email"
                         formControlProps={{
-                          fullWidth: true
+                          fullWidth: true,
+                          required: true
                         }}
                         inputProps={{
                           type: "email",
@@ -87,7 +88,8 @@ export default function LoginPage() {
                         labelText="Senha"
                         id="password"
                         formControlProps={{
-                          fullWidth: true
+                          fullWidth: true,
+                          required: true
                         }}
                         inputProps={{
                           type: "password",

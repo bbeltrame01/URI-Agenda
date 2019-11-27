@@ -26,13 +26,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const register = () => {
+  const register = (e) => {
+    e.preventDefault(); 
     fetch(server+`user/register`,{ 
       method:"POST",
       body: JSON.stringify({ 
         "name": document.getElementById('name').value,
         "email": document.getElementById('email').value,
-        "password": document.getElementById("password").value
+        "password": document.getElementById("password").value,
+        "confirmPassword": document.getElementById("confirmPassword").value
       }),
       headers: {
         'Accept': 'application/json, text/plain, /',
@@ -41,8 +43,13 @@ export default function LoginPage() {
     })
     .then(response => response.json())
     .then(response => {
-      sessionStorage.setItem("userId", response.user._id);
-      window.location.href="workspace";
+
+      if(response.error){
+        document.getElementById('msg').innerHTML = response.error 
+      }else{
+        sessionStorage.setItem("userId", response.user._id);
+        window.location.href="workspace";
+      }
     })
     .catch(err => console.log(err))
   };
@@ -71,89 +78,103 @@ export default function LoginPage() {
           backgroundPosition: "top center"
         }}
       >
-        <div className={classes.container}>
-          <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={3}>
-              <Card className={classes[cardAnimaton]}>
-                <form className={classes.form}>
-                  <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Cadastre-se</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <CustomInput
-                      labelText="Nome Completo"
-                      id="name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <People className={classes.inputIconsColor} />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                    <CustomInput
-                      labelText="Email"
-                      id="email"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "email",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Email className={classes.inputIconsColor} />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                    <CustomInput
-                      labelText="Senha"
-                      id="password"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "password",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Icon className={classes.inputIconsColor}>
-                              lock_outline
-                            </Icon>
-                          </InputAdornment>
-                        ),
-                        autoComplete: "off"
-                      }}
-                    /> 
-                    <CustomInput
-                      labelText="Confirme a Senha"
-                      id="password"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "password",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Icon className={classes.inputIconsColor}>
-                              lock_outline
-                            </Icon>
-                          </InputAdornment>
-                        ),
-                        autoComplete: "off"
-                      }}
-                    /> 
-                    <Button block color="primary" size="lg" onClick={() => register()}>Cadastrar</Button>
-                    <Button block simple color="primary" size="lg" href={"/login"}>Login</Button>                
-                  </CardBody>
-                </form>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+        <form onSubmit={register}>
+          <div className={classes.container}>
+            <GridContainer justify="center">
+              <GridItem xs={12} sm={12} md={3}>
+                <Card className={classes[cardAnimaton]}>
+                  <form className={classes.form}>
+                    <CardHeader color="primary" className={classes.cardHeader}>
+                      <h4>Cadastre-se</h4>
+                    </CardHeader>
+                    <CardBody>
+                      <CustomInput
+                        labelText="Nome Completo"
+                        id="name"
+                        formControlProps={{
+                          fullWidth: true,
+                          required: true
+
+                        }}
+                        inputProps={{
+                          type: "text",
+                          
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <People className={classes.inputIconsColor} />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                      <CustomInput
+                        labelText="Email"
+                        id="email"
+                        formControlProps={{
+                          fullWidth: true,
+                          required: true
+
+                        }}
+                        inputProps={{
+                          type: "email",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Email className={classes.inputIconsColor} />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                      <CustomInput
+                        labelText="Senha"
+                        id="password"
+                        formControlProps={{
+                          fullWidth: true,
+                          required: true
+
+                        }}
+                        inputProps={{
+                          type: "password",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Icon className={classes.inputIconsColor}>
+                                lock_outline
+                              </Icon>
+                            </InputAdornment>
+                          ),
+                          autoComplete: "off"
+                        }}
+                      /> 
+                      <CustomInput
+                        labelText="Confirme a Senha"
+                        id="confirmPassword"
+                        formControlProps={{
+                          fullWidth: true,
+                          required: true
+
+                        }}
+                        inputProps={{
+                          type: "password",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Icon className={classes.inputIconsColor}>
+                                lock_outline
+                              </Icon>
+                            </InputAdornment>
+                          ),
+                          autoComplete: "off"
+                        }}
+                      />
+                      <span>
+                        <p id="msg" style={{color:"red"}}></p>
+                      </span>
+                      <Button block color="primary" size="lg" type="submit">Cadastrar</Button>
+                      <Button block simple color="primary" size="lg" href={"/login"}>Login</Button>                
+                    </CardBody>
+                  </form>
+                </Card>
+              </GridItem>
+            </GridContainer>
+          </div>
+        </form>
       </div>
     </div>
   );
