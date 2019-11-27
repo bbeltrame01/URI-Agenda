@@ -15,6 +15,8 @@ import Icon from "@material-ui/core/Icon";
 import Save from "@material-ui/icons/Save";
 import CardFooter from "components/Card/CardFooter";
 import {server} from "variables/constants";
+import Snackbar from "components/Snackbar/Snackbar.js";
+import AddAlert from "@material-ui/icons/AddAlert";
 
 const styles = {
   cardCategoryWhite: {
@@ -42,7 +44,10 @@ const UserProfile = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [msg, setMsg] = useState('');
 
+  const [open, setOpen] = useState(false);
+  const [color, setColor] = useState();
 
   useEffect(()=>{
     fetch(server+`user/`+sessionStorage.getItem("userId"))
@@ -53,22 +58,34 @@ const UserProfile = () => {
         setEmail(response.email) 
       }
     })
-  })
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if(password !== confirmPassword){
+      setMsg("Senhas diferentes");
+      setColor("danger")
+      setOpen(true)
+      return false;
+    }
     console.log(password)
+    console.log(sessionStorage.getItem("userId"))
     
+    let obj = {
+      "id": sessionStorage.getItem("userId"),
+      "name": name,
+      "email": email,
+    }
+    
+    if (password){
+      obj.password = password
+    }
 
-    /*fetch(server+`user/update`+sessionStorage.getItem("userId"),{
+    fetch(server+`user/update`,{
     
       method:"POST",
-      body: JSON.stringify({ 
-        "name": name,
-        "email": email,
-        "password": password
-      }),
+      body: JSON.stringify(obj),
       headers: {
         'Accept': 'application/json, text/plain, /',
         'Content-Type': 'application/json'
@@ -76,11 +93,29 @@ const UserProfile = () => {
     })
     .then(response => response.json())
     .then(response => {
-
-    })*/
+      if (!response.error){
+        setMsg("Informações alteradas com sucesso!");
+        setColor("success")
+        setOpen(true)
+      }
+    })
 
   }
-    
+  function handleChangeName(e) { 
+    setName(e.target.value);
+  }
+
+  function handleChangeEmail(e) { 
+    setEmail(e.target.value);
+  }
+
+  function handleChangePassword(e) { 
+    setPassword(e.target.value);
+  }
+
+  function handleChangeConfirPassword(e) { 
+    setConfirmPassword(e.target.value);
+  }
 
   const classes = useStyles();
   return (
@@ -98,10 +133,10 @@ const UserProfile = () => {
                     <CustomInput
                       labelText="Nome Completo"
                       id="name"
-
+                      onChange={handleChangeName}
                       inputProps={{
-                        value:name,
-
+                        value: name,
+                        onChange: handleChangeName
                       }}
                       formControlProps={{
                         fullWidth: true,
@@ -115,7 +150,9 @@ const UserProfile = () => {
                       labelText="Email"
                       id="email"
                       inputProps={{
+                        type: "email",
                         value:email,
+                        onChange: handleChangeEmail
                       }}
                       formControlProps={{
                         fullWidth: true
@@ -140,7 +177,8 @@ const UserProfile = () => {
                               </Icon>
                             </InputAdornment>
                           ),
-                          autoComplete: "off"
+                          autoComplete: "off",
+                          onChange: handleChangePassword
                         }}
                     />
                   </GridItem>
@@ -161,13 +199,25 @@ const UserProfile = () => {
                               </Icon>
                             </InputAdornment>
                           ),
-                          autoComplete: "off"
+                          autoComplete: "off",
+                          onChange: handleChangeConfirPassword
                         }}
                     />
                   </GridItem>
-                </GridContainer>              
+                </GridContainer>       
+        
               </CardBody>
-              <CardFooter>
+              <Snackbar
+            place="bc"
+            color={color}
+            icon={AddAlert}
+            message={msg}
+            open={open}
+            closeNotification={() => setOpen(false)}
+            close
+          />              
+          <CardFooter>
+                    
                 <Button
                   type="submit"
                   color="success"

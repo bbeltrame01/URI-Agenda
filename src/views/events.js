@@ -1,4 +1,25 @@
-export default [
+import { server } from "variables/constants";
+
+async function eventos() {
+
+  // await fetch(server + `evento/` + sessionStorage.getItem("workspaceId"))
+  //   .then(response => response.json())
+  //   .then(response => {
+  //     var eventArray = [];
+  //     response.forEach(element => {
+  //       eventArray.push({
+  //         'title': element.descricao,
+  //         'start': new Date(2019, 10, 18),
+  //         'end': new Date(2019, 10, 18)
+  //       })
+  //     });
+  //     console.log(eventArray) 
+  //     return eventArray;
+  //   })
+}
+
+export default eventos();
+/* export default [
     {
       'title': 'Reunião de Dpto',
       'start': new Date(2019, 10, 18),
@@ -6,8 +27,8 @@ export default [
     },
     {
       'title': 'Trabalho Faculdade',
-      'start': new Date(2019, 10, 27),
-      'end': new Date(2019, 10, 27)
+      'start': new Date(2019, 10, 27,11,11,11),
+      'end': new Date(2019, 10, 27, 12,12,12)
     },
   
     {
@@ -58,8 +79,8 @@ export default [
     },
     {
       'title': 'Dinner',
-      'start': new Date(2015, 3, 12, 20, 0, 0, 0),
-      'end': new Date(2015, 3, 12, 21, 0, 0, 0)
+      'start': new Date(2019, 11, 11, 0, 0, 0, 0),
+      'end': new Date(2019, 11, 11, 0, 0, 0, 0)
     },
     {
       'title': 'Birthday Party',
@@ -87,4 +108,4 @@ export default [
       'end': new Date(2015, 3, 22, 2, 0, 0)
     }
   ]
-  
+   */
