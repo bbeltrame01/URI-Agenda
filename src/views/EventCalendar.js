@@ -25,6 +25,7 @@ export default class EventCalendar extends Component {
       handleSelect = ({ start, end }) => {
         const title = window.prompt("Novo Evento:")
         if (title)
+        console.log(start)
           this.setState({
             events: [
               ...this.state.events,

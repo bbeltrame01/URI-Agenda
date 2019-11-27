@@ -40,117 +40,148 @@ const useStyles = makeStyles(styles);
 const UserProfile = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
 
   useEffect(()=>{
-    fetch(server+`user/`+sessionStorage.getItem("userId")
-    )
+    fetch(server+`user/`+sessionStorage.getItem("userId"))
     .then(response => response.json())
     .then(response => {
-      if(response.error){
-        document.getElementById('msg').innerHTML = response.error 
-      }else{
-        console.log(response.name)
+      if(!response.error){
         setName(response.name)
         setEmail(response.email) 
-        console.log(name)
-       // document.getElementById('email').innerHTML = response.user.email
       }
     })
   })
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(password)
+    
+
+    /*fetch(server+`user/update`+sessionStorage.getItem("userId"),{
+    
+      method:"POST",
+      body: JSON.stringify({ 
+        "name": name,
+        "email": email,
+        "password": password
+      }),
+      headers: {
+        'Accept': 'application/json, text/plain, /',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(response => {
+
+    })*/
+
+  }
     
 
   const classes = useStyles();
   return (
-    <div>
-      <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Perfil do Usuário</h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Nome Completo"
-                    id="name"
-                    value={name}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Email"
-                    id="email"
-                    value={email}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>                
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Senha"
-                    id="password"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                        type: "password",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Icon className={classes.inputIconsColor}>
-                              lock_outline
-                            </Icon>
-                          </InputAdornment>
-                        ),
-                        autoComplete: "off"
+    <form onSubmit={handleSubmit}>
+      <div>
+        <GridContainer justify="center">
+          <GridItem xs={12} sm={12} md={6}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Perfil do Usuário</h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Nome Completo"
+                      id="name"
+
+                      inputProps={{
+                        value:name,
+
                       }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Confirme a Senha"
-                    id="password"
-                    formControlProps={{
-                      type: "password",
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                        type: "password",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Icon className={classes.inputIconsColor}>
-                              lock_outline
-                            </Icon>
-                          </InputAdornment>
-                        ),
-                        autoComplete: "off"
+                      formControlProps={{
+                        fullWidth: true,
                       }}
-                  />
-                </GridItem>
-              </GridContainer>              
-            </CardBody>
-            <CardFooter>
-              <Button
-                color="success"
-                block
-              >
-                <Save />
-                Gravar
-              </Button>
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
-    </div>
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Email"
+                      id="email"
+                      inputProps={{
+                        value:email,
+                      }}
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>                
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Senha"
+                      id="password"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                          type: "password",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Icon className={classes.inputIconsColor}>
+                                lock_outline
+                              </Icon>
+                            </InputAdornment>
+                          ),
+                          autoComplete: "off"
+                        }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Confirme a Senha"
+                      id="confirm-password"
+                      formControlProps={{
+                        type: "password",
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                          type: "password",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Icon className={classes.inputIconsColor}>
+                                lock_outline
+                              </Icon>
+                            </InputAdornment>
+                          ),
+                          autoComplete: "off"
+                        }}
+                    />
+                  </GridItem>
+                </GridContainer>              
+              </CardBody>
+              <CardFooter>
+                <Button
+                  type="submit"
+                  color="success"
+                  block
+                >
+                  <Save />
+                  Gravar
+                </Button>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </form>
   );
 }
 
