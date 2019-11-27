@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -23,7 +23,8 @@ import {server} from "variables/constants";
 const useStyles = makeStyles(styles);
 
 export default function LoginPage() {
-
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const register = () => {
     fetch(server+`user/register`,{ 
@@ -51,6 +52,15 @@ export default function LoginPage() {
     setCardAnimation("");
   }, 700);
   const classes = useStyles();
+
+  function handleChangePassword(e) { 
+    setPassword(e.target.value);
+  }
+
+  function handleChangeConfirPassword(e) { 
+    setConfirmPassword(e.target.value);
+  }
+
   return (
     <div>
       <div
@@ -102,6 +112,24 @@ export default function LoginPage() {
                     />
                     <CustomInput
                       labelText="Senha"
+                      id="password"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "password",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Icon className={classes.inputIconsColor}>
+                              lock_outline
+                            </Icon>
+                          </InputAdornment>
+                        ),
+                        autoComplete: "off"
+                      }}
+                    /> 
+                    <CustomInput
+                      labelText="Confirme a Senha"
                       id="password"
                       formControlProps={{
                         fullWidth: true
