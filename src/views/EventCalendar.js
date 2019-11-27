@@ -1,4 +1,4 @@
-import React,{Component, useState} from 'react';
+import React,{Component} from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
