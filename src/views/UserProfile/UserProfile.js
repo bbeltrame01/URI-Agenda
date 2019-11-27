@@ -163,7 +163,7 @@ const UserProfile = () => {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Senha"
+                      labelText="Nova Senha"
                       id="password"
                       formControlProps={{
                         fullWidth: true
@@ -184,7 +184,7 @@ const UserProfile = () => {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Confirme a Senha"
+                      labelText="Confirme a Nova Senha"
                       id="confirm-password"
                       formControlProps={{
                         type: "password",

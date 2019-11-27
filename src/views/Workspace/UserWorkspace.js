@@ -74,7 +74,7 @@ export default function LoginPage() {
   return (
     <div>
       <div>
-        <div className={classes.container}>
+        <div>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={6}>
               <Card className={classes[cardAnimaton]}>
