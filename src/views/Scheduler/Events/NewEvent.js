@@ -27,12 +27,16 @@ class ModalEvent extends Component {
                   <Form.Control type="text" value={this.props.titleValue} onChange={this.props.handleChangeEventTitle} placeholder="Digite o nome do evento" required />
               </Modal.Body>
               <Modal.Footer>
+                <Button variant="danger" id="btn-excluir" onClick={this.props.onDelete}>
+                  Excluir
+                </Button>
                 <Button variant="secondary" onClick={this.props.onHide}>
                   Fechar
                 </Button>
                 <Button variant="success" type="submit">
-                  Criar
+                  {this.props.nomeSubmit}
                 </Button>
+               
               </Modal.Footer>
             </Form>
         </Modal>
@@ -44,12 +48,15 @@ class ModalEvent extends Component {
 ModalEvent.propTypes = {
   onHide: PropTypes.func.isRequired,
   handleChangeEventTitle: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   handleChangeEventDesc: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   titleValue: PropTypes.string,
   descValue: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
+  nomeSubmit: PropTypes.string,
+  css: PropTypes.string
 };
 
 export default ModalEvent

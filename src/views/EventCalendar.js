@@ -36,6 +36,7 @@ export default class EventCalendar extends Component {
           var eventArray = [];
           response.forEach(element => {
             eventArray.push({
+              'id': element._id,
               'title': element.title,
               'start': new Date(element.dt_hr_inicial),
               'end': new Date(element.dt_hr_final),
@@ -84,28 +85,39 @@ export default class EventCalendar extends Component {
           end = "",
           descValue = "",
           title = "",
+          nomeSubmit = "",
+          idEvent = "",
+          css = "display:none",
         } = this.state;
 
         const handleShow = ({ start, end }) => {
           this.setState({
             title: "Novo Evento",
+            nomeSubmit: "Criar",
             titleValue: "",
             show: true,
             start : start,
             end : end,
+            css : "display:none",
+
           })
+          document.getElementById("btn-excluir").style.display="none";
         } 
 
-        const teste = (e) => {
+        const update = (e) => {
            this.setState({
             show: true,
             title: "Edição do evento",
+            nomeSubmit: "Atualizar",
             titleValue: e.title,
+            idEvent: e.id,
+            start : e.start,
+            end : e.end,
+            css : "display:block",
           }) 
-          console.log(e)
+
         } 
-
-
+        
         const handleSave = (e) => {
           e.preventDefault()
            this.setState({
@@ -120,12 +132,20 @@ export default class EventCalendar extends Component {
             show: false,
             titleValue: "",
             descValue: "",
-          }) 
-          fetch(server+`evento/create`,{ 
+          })
+          
+          let route = server+`evento/create`;
+          if (nomeSubmit === "Atualizar"){
+            route = server+`evento/update`;
+          }
+          console.log(route)
+
+          fetch(route,{ 
             method:"POST",
             body: JSON.stringify({
               "user_id": sessionStorage.getItem("userId"),
               "desc": descValue,
+              "id": idEvent,
               "title": titleValue,
               "workspace_id": sessionStorage.getItem("workspaceId"),
               "dt_hr_inicial": start,
@@ -138,7 +158,24 @@ export default class EventCalendar extends Component {
           })
           .then(response => response.json())
           .then(response => {
-            console.log(response)
+            window.location.reload()
+          }) 
+        }
+        const handleDelete = (e) => {
+
+          fetch(server+`evento/delete`,{ 
+            method:"POST",
+            body: JSON.stringify({
+              "id": idEvent,
+            }),
+            headers: {
+              'Accept': 'application/json, text/plain, /',
+              'Content-Type': 'application/json'
+            },
+          })
+          .then(response => response.json())
+          .then(response => {
+            window.location.reload()
           }) 
         }
   
@@ -151,7 +188,7 @@ export default class EventCalendar extends Component {
                 events={this.state.events}
                 step={60}
                 onSelectSlot={handleShow}
-                onSelectEvent={teste}
+                onSelectEvent={update}
                 />               
               </div>
               <ModalEvent
@@ -161,8 +198,11 @@ export default class EventCalendar extends Component {
                 descValue={descValue}
                 onHide={this.handleClose}
                 onSave={handleSave}
+                css={css}
                 handleChangeEventTitle={this.handleChangeEventTitle}
                 handleChangeEventDesc={this.handleChangeEventDesc}
+                nomeSubmit={nomeSubmit}
+                onDelete={handleDelete}
               /> 
           </>
         )
