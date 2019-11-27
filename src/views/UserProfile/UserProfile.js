@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -9,10 +9,12 @@ import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Icon from "@material-ui/core/Icon";
 
 import Save from "@material-ui/icons/Save";
-import Delete from "@material-ui/icons/Delete";
 import CardFooter from "components/Card/CardFooter";
+import {server} from "variables/constants";
 
 const styles = {
   cardCategoryWhite: {
@@ -35,7 +37,29 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function UserProfile() {
+const UserProfile = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+
+  useEffect(()=>{
+    fetch(server+`user/`+sessionStorage.getItem("userId")
+    )
+    .then(response => response.json())
+    .then(response => {
+      if(response.error){
+        document.getElementById('msg').innerHTML = response.error 
+      }else{
+        console.log(response.name)
+        setName(response.name)
+        setEmail(response.email) 
+        console.log(name)
+       // document.getElementById('email').innerHTML = response.user.email
+      }
+    })
+  })
+    
+
   const classes = useStyles();
   return (
     <div>
@@ -51,6 +75,7 @@ export default function UserProfile() {
                   <CustomInput
                     labelText="Nome Completo"
                     id="name"
+                    value={name}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -61,7 +86,8 @@ export default function UserProfile() {
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText="Email"
-                    id="email-address"
+                    id="email"
+                    value={email}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -76,6 +102,17 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{
+                        type: "password",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Icon className={classes.inputIconsColor}>
+                              lock_outline
+                            </Icon>
+                          </InputAdornment>
+                        ),
+                        autoComplete: "off"
+                      }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
@@ -83,8 +120,20 @@ export default function UserProfile() {
                     labelText="Confirme a Senha"
                     id="password"
                     formControlProps={{
+                      type: "password",
                       fullWidth: true
                     }}
+                    inputProps={{
+                        type: "password",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Icon className={classes.inputIconsColor}>
+                              lock_outline
+                            </Icon>
+                          </InputAdornment>
+                        ),
+                        autoComplete: "off"
+                      }}
                   />
                 </GridItem>
               </GridContainer>              
@@ -92,15 +141,10 @@ export default function UserProfile() {
             <CardFooter>
               <Button
                 color="success"
+                block
               >
                 <Save />
                 Gravar
-              </Button>
-              <Button
-                color="danger"
-              >
-                <Delete />
-                Excluir
               </Button>
             </CardFooter>
           </Card>
@@ -109,3 +153,5 @@ export default function UserProfile() {
     </div>
   );
 }
+
+export default UserProfile;

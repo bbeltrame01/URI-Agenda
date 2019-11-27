@@ -16,10 +16,57 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-dashboard-react/views/loginPage.js";
 
 import image from "assets/img/bg.jpg";
+import {server} from "variables/constants";
 
 const useStyles = makeStyles(styles);
 
-export default function LoginPage(props) {
+export default function LoginPage() {
+  const workspace = () => {
+    fetch(server+`workspace/create`,{ 
+      method:"POST",
+      body: JSON.stringify({ 
+        "name": document.getElementById('workspace').value 
+      }),
+      headers: {
+        'Accept': 'application/json, text/plain, /',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(response => {
+
+      if(response.error){
+        document.getElementById('msg').innerHTML = response.error 
+      }else{
+        sessionStorage.setItem("workspaceId", response.workspace._id);
+        window.location.href="admin";
+      }
+    })
+  };
+
+  const workspaceLogin = () => {
+    fetch(server+`workspace/login`,{ 
+      method:"POST",
+      body: JSON.stringify({ 
+        "name": document.getElementById('workspace').value 
+      }),
+      headers: {
+        'Accept': 'application/json, text/plain, /',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(response => {
+
+      if(response.error){
+        document.getElementById('msg').innerHTML = response.error 
+      }else{
+        sessionStorage.setItem("workspaceId", response.workspace._id);
+        window.location.href="admin";
+      }
+    })
+  };
+
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -46,7 +93,7 @@ export default function LoginPage(props) {
                   <CardBody>
                     <CustomInput
                       labelText="Nome Agenda"
-                      id="first"
+                      id="workspace"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -59,8 +106,11 @@ export default function LoginPage(props) {
                         )
                       }}
                     />
-                    <Button block color="primary" size="lg">Entrar</Button>
-                    <Button block simple color="primary" size="lg">Criar</Button>                
+                    <span>
+                      <p id="msg" style={{color:"red"}}></p>
+                    </span> 
+                    <Button block color="primary" size="lg" onClick={() => workspaceLogin()}>Entrar</Button>
+                    <Button block simple color="primary" size="lg" onClick={() => workspace()}>Criar</Button>                
                   </CardBody>
                 </form>
               </Card>

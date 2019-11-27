@@ -18,10 +18,34 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-dashboard-react/views/loginPage.js";
 
 import image from "assets/img/bg.jpg";
+import {server} from "variables/constants";
 
 const useStyles = makeStyles(styles);
 
-export default function LoginPage(props) {
+export default function LoginPage() {
+
+
+  const register = () => {
+    fetch(server+`user/register`,{ 
+      method:"POST",
+      body: JSON.stringify({ 
+        "name": document.getElementById('name').value,
+        "email": document.getElementById('email').value,
+        "password": document.getElementById("password").value
+      }),
+      headers: {
+        'Accept': 'application/json, text/plain, /',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(response => {
+      sessionStorage.setItem("userId", response.user._id);
+      window.location.href="workspace";
+    })
+    .catch(err => console.log(err))
+  };
+
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -48,7 +72,7 @@ export default function LoginPage(props) {
                   <CardBody>
                     <CustomInput
                       labelText="Nome Completo"
-                      id="first"
+                      id="name"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -78,7 +102,7 @@ export default function LoginPage(props) {
                     />
                     <CustomInput
                       labelText="Senha"
-                      id="pass"
+                      id="password"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -94,7 +118,7 @@ export default function LoginPage(props) {
                         autoComplete: "off"
                       }}
                     /> 
-                    <Button block color="primary" size="lg">Cadastrar</Button>
+                    <Button block color="primary" size="lg" onClick={() => register()}>Cadastrar</Button>
                     <Button block simple color="primary" size="lg" href={"/login"}>Login</Button>                
                   </CardBody>
                 </form>

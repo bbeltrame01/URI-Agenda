@@ -17,16 +17,32 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-dashboard-react/views/loginPage.js";
 
 import image from "assets/img/bg.jpg";
+import {server} from "variables/constants";
 
 const useStyles = makeStyles(styles);
 
-export default function LoginPage(props) {
-  const LoginData = ``;
-  const searchUser = () => {
-    fetch(LoginData)
+export default function LoginPage() {  
+  const login = () => {
+    fetch(server+`user/login`,{ 
+      method:"POST",
+      body: JSON.stringify({ 
+        "email": document.getElementById('email').value ,
+        "password": document.getElementById("password").value
+      }),
+      headers: {
+        'Accept': 'application/json, text/plain, /',
+        'Content-Type': 'application/json'
+      },
+    })
     .then(response => response.json())
     .then(response => {
-      
+
+      if(response.error){
+        document.getElementById('msg').innerHTML = response.error 
+      }else{
+        sessionStorage.setItem("userId", response.user._id);
+        window.location.href="workspace";
+      }
     })
   };
 
@@ -67,7 +83,7 @@ export default function LoginPage(props) {
                     />
                     <CustomInput
                       labelText="Senha"
-                      id="pass"
+                      id="password"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -82,8 +98,12 @@ export default function LoginPage(props) {
                         ),
                         autoComplete: "off"
                       }}
-                    />                  
-                    <Button block color="primary" size="lg" onClick={() => searchUser()}>Entrar</Button>
+
+                    />       
+                    <span>
+                      <p id="msg" style={{color:"red"}}></p>
+                    </span>           
+                    <Button block color="primary" size="lg" onClick={() => login()}>Entrar</Button>
                     <Button block simple color="primary" size="lg" href={"/register"}>Cadastre-se</Button>
                   </CardBody>
                 </form>
