@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+
 import PropTypes from 'prop-types';
-
-//import {handleClose, handleShow} from './EventStatus';
-
 
 class ModalEvent extends Component {
   constructor(props) {
@@ -18,40 +17,39 @@ class ModalEvent extends Component {
   render() {
     return (
       <>
-{/*         <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button> */}
-
         <Modal show={this.props.show} onHide={this.props.onHide}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>{this.props.title}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.props.onHide}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.props.onHide}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
+            <Form onSubmit={this.props.onSave}>
+              <Modal.Body>
+                  <Form.Label>Nome</Form.Label>
+                  <Form.Control type="text" value={this.props.titleValue} onChange={this.props.handleChangeEventTitle} placeholder="Digite o nome do evento" required />
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.props.onHide}>
+                  Fechar
+                </Button>
+                <Button variant="success" type="submit">
+                  Criar
+                </Button>
+              </Modal.Footer>
+            </Form>
         </Modal>
       </>
     );
   } 
 }
-/* 
-
-export function ModalEvent() {
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-} */
 
 ModalEvent.propTypes = {
   onHide: PropTypes.func.isRequired,
-  show: PropTypes.bool.isRequired
+  handleChangeEventTitle: PropTypes.func.isRequired,
+  handleChangeEventDesc: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+  titleValue: PropTypes.string,
+  descValue: PropTypes.string,
+  title: PropTypes.string
 };
 
 export default ModalEvent
